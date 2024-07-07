@@ -57,7 +57,7 @@ touch .env
 2. Add the following environment variables to the .env file:
 
 ```env
-DATABASE_HOST=your_database_host
+DATABASE_HOSTNAME=your_database_host
 DATABASE_PORT=5432
 DATABASE_USERNAME=your_database_username
 DATABASE_PASSWORD=your_database_password
