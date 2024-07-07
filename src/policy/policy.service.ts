@@ -21,8 +21,9 @@ export class PolicyService {
     return this.policyRepository.save(policy);
   }
 
-  async update(policy: Policy, id: number): Promise<void> {
+  async update(policy: Policy, id: number): Promise<Policy> {
     await this.policyRepository.update(id, policy);
+    return policy;
   }
 
   async remove(id: number): Promise<void> {

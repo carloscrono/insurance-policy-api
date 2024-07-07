@@ -176,6 +176,10 @@ To test the API endpoints using Postman, follow these steps:
 
 ##### Click Send.
 
+## UPDATE - Application deployed to Heroku for Testing
+
+- Please use https://insurance-policy-api-v2-456a97cfd3c5.herokuapp.com for testing
+
 ## Middleware
 
 - Logging: Logs all incoming requests along with the method, URL, status code, and response time.

@@ -33,12 +33,15 @@ export class PolicyController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() policy: Policy): Promise<void> {
+  update(@Param('id') id: number, @Body() policy: Policy): Promise<Policy> {
     return this.policyService.update(policy, id);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number): Promise<void> {
-    return this.policyService.remove(id);
+  async delete(@Param('id') id: number): Promise<any> {
+    this.policyService.remove(id);
+    return {
+      Status: 'Deleted',
+    };
   }
 }
