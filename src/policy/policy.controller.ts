@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -11,6 +12,7 @@ import {
 import { PolicyService } from './policy.service';
 import { Policy } from './policy.entity';
 import { JwtAuthGuard } from '../auth/jwt.authguard';
+import { NOTFOUND } from 'dns';
 
 @UseGuards(JwtAuthGuard)
 @Controller('policy')
@@ -23,8 +25,12 @@ export class PolicyController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Policy> {
-    return this.policyService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Policy> {
+    const policy = await this.policyService.findOne(id);
+    if (!policy) {
+      throw new NotFoundException(`Policy with id ${id} not found`);
+    }
+    return policy;
   }
 
   @Post()
@@ -33,12 +39,23 @@ export class PolicyController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() policy: Policy): Promise<Policy> {
+  async update(
+    @Param('id') id: number,
+    @Body() policy: Policy,
+  ): Promise<Policy> {
+    const myPolicy = await this.policyService.findOne(id);
+    if (!myPolicy) {
+      throw new NotFoundException(`Policy with id ${id} not found`);
+    }
     return this.policyService.update(policy, id);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<any> {
+    const policy = await this.policyService.findOne(id);
+    if (!policy) {
+      throw new NotFoundException(`Policy with id ${id} not found`);
+    }
     this.policyService.remove(id);
     return {
       Status: 'Deleted',
