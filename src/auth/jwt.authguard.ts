@@ -1,4 +1,10 @@
-import { ExecutionContext, Injectable, Logger, Inject } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Injectable,
+  Logger,
+  Inject,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 
@@ -17,6 +23,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     if (!token) {
       this.logger.error('No token found in request');
+      throw new UnauthorizedException('No token found in request');
       return false;
     }
 
